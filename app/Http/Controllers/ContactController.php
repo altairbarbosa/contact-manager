@@ -24,6 +24,7 @@ class ContactController extends Controller
     public function create()
     {
         // Requires authentication
+        dd('Chegou ao método create!');
         return view('contacts.create');
     }
 
