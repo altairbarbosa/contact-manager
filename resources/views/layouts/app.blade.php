@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="light">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="light"> <!-- Define 'light' como padrão, o JS vai ajustar -->
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -51,11 +51,7 @@
                             <x-nav-link :href="route('contacts.index')" :active="request()->routeIs('contacts.index')">
                                 {{ __('Contacts') }}
                             </x-nav-link>
-                            @auth
-                            <x-nav-link :href="route('contacts.create')" :active="request()->routeIs('contacts.create')">
-                                {{ __('Add New Contact') }}
-                            </x-nav-link>
-                            @endauth
+                            {{-- REMOVIDO: Link "Add New Contact" para Desktop --}}
                         </div>
                     </div>
 
@@ -123,7 +119,7 @@
                         <!-- Fim do botão de alternância de tema para Mobile -->
 
                         <!-- Hamburger -->
-                        <div class="-mr-2 flex items-center">
+                        <div class="-mr-2 flex items-center"> {{-- Removido sm:hidden daqui, pois o botão de tema já lida com isso --}}
                             <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 dark:text-gray-500 hover:text-gray-500 dark:hover:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-900 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-900 focus:text-gray-500 dark:focus:text-gray-400 transition duration-150 ease-in-out">
                                 <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                                     <path :class="{'hidden': open, 'inline-flex': ! open }" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
@@ -144,11 +140,7 @@
                     <x-responsive-nav-link :href="route('contacts.index')" :active="request()->routeIs('contacts.index')">
                         {{ __('Contacts') }}
                     </x-responsive-nav-link>
-                    @auth
-                    <x-responsive-nav-link :href="route('contacts.create')" :active="request()->routeIs('contacts.create')">
-                        {{ __('Add New Contact') }}
-                    </x-responsive-nav-link>
-                    @endauth
+                    {{-- REMOVIDO: Link "Add New Contact" para Mobile --}}
                 </div>
 
                 <!-- Responsive Settings Options -->
@@ -231,16 +223,17 @@
             const moonIconMobile = document.getElementById('moon-icon-mobile');
             const sunIconMobile = document.getElementById('sun-icon-mobile');
 
+
             // Função para aplicar o tema e atualizar os ícones
             const applyTheme = (theme) => {
                 if (theme === 'dark') {
                     htmlElement.classList.add('dark');
-                    htmlElement.classList.remove('light');
+                    htmlElement.classList.remove('light'); // Garante que a classe 'light' é removida
                     localStorage.setItem('theme', 'dark');
                     // Atualiza ícones do desktop
                     if (moonIconDesktop && sunIconDesktop) {
-                        moonIconDesktop.classList.remove('hidden');
-                        sunIconDesktop.classList.add('hidden');
+                        moonIconDesktop.classList.remove('hidden'); // Lua visível
+                        sunIconDesktop.classList.add('hidden');    // Sol escondido
                     }
                     // Atualiza ícones do mobile
                     if (moonIconMobile && sunIconMobile) {
@@ -249,12 +242,12 @@
                     }
                 } else { // theme === 'light'
                     htmlElement.classList.remove('dark');
-                    htmlElement.classList.add('light');
+                    htmlElement.classList.add('light'); // Garante que a classe 'light' é adicionada
                     localStorage.setItem('theme', 'light');
                     // Atualiza ícones do desktop
                     if (moonIconDesktop && sunIconDesktop) {
-                        moonIconDesktop.classList.add('hidden');
-                        sunIconDesktop.classList.remove('hidden');
+                        moonIconDesktop.classList.add('hidden');    // Lua escondida
+                        sunIconDesktop.classList.remove('hidden'); // Sol visível
                     }
                     // Atualiza ícones do mobile
                     if (moonIconMobile && sunIconMobile) {
